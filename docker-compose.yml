@@ -1,0 +1,20 @@
+version: '3.5'
+
+services:
+  gradle:
+    image: gradle:alpine
+    working_dir: /home/gradle/project
+    command: "gradle clean run"
+    ports:
+      - "8080:8080"
+    volumes: # Volume binding
+      - ./:/home/gradle/project
+      - ~/.m2:/home/gradle/.m2
+      - ~/.gradle:/home/gradle/.gradle
+  node:
+    image: node:10-alpine
+    working_dir: /home/node/app
+    volumes:
+      - ./:/home/node/app
+      - ~/.npm:/.npm
+      - ~/.npmrc:/home/node/.npmrc
