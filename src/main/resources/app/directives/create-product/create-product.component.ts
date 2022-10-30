@@ -1,17 +1,17 @@
 import {IControllerConstructor, Injectable} from "angular";
 import {Product} from "../../models/product.model";
 
-interface IListProductComponentProps {
-    products: Array<Product>;
+interface ICreateProductComponentProps {
+    onCreate: () => any;
 }
 
-interface IListProductComponentController extends IListProductComponentProps {
+interface ICreateProductComponentController extends ICreateProductComponentProps {
+    add(): void;
 }
 
-class ListProductComponentController implements IListProductComponentController {
+class ListProductComponentController implements ICreateProductComponentController {
 
-    public products: Array<Product>;
-    public functionBinding:() => any;
+    public onCreate:() => any;
 
     constructor() {
     }
@@ -19,13 +19,13 @@ class ListProductComponentController implements IListProductComponentController 
     $onInit() {
     }
 
-    $onChanges(changes) {
-        console.log("changed with: ", this.products);
+    add(): void {
+        this.onCreate();
     }
 
 }
 
-export class ListProductComponent implements ng.IComponentOptions {
+export class CreateProductComponent implements ng.IComponentOptions {
 
     public bindings: {[boundProperty: string]: string};
     public controller: string | Injectable<IControllerConstructor>;
@@ -34,10 +34,10 @@ export class ListProductComponent implements ng.IComponentOptions {
 
     constructor() {
         this.bindings = {
-            products: '<'
+            onCreate: '&'
         };
         this.controller = ListProductComponentController;
-        this.templateUrl = './directives/list-product/list-product.html';
+        this.templateUrl = './directives/create-product/create-product.html';
         this.controllerAs = 'vm';
     }
 }
